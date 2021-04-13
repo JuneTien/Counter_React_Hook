@@ -1,4 +1,3 @@
-import "./styles.css";
 import { useState, useEffect, useReducer } from "react";
 
 export default function App() {
@@ -8,26 +7,30 @@ export default function App() {
       <br />
       <CountWithIntervel />
       <br />
-      <CountReducer />
+      <CountHookReducer />
     </div>
   );
 }
 
+// hook
 const Count = () => {
   const [count, setCount] = useState(0);
   return (
     <div>
       {count}
+      <br />
       <button onClick={() => setCount(count + 1)}>ADD</button>
     </div>
   );
 };
 
+// hook with customize hook
 const CountWithIntervel = () => {
   const { count, handleSetCount } = useCounter();
   return (
     <div>
       {count}
+      <br />
       <button onClick={handleSetCount}>ADD</button>
     </div>
   );
@@ -49,24 +52,26 @@ const useCounter = () => {
   return { count, handleSetCount };
 };
 
+// hookReducer
 const reducer = (state, action) => {
   switch (action.type) {
-    case "aaa":
+    case "add":
       return { count: state.count + 1 };
-    case "bbb":
+    case "minus":
       return { count: state.count - 1 };
     default:
       throw new Error();
   }
 };
 
-const CountReducer = () => {
+const CountHookReducer = () => {
   const [state, setCount] = useReducer(reducer, { count: 0 });
   return (
     <div>
       {state.count}
-      <button onClick={() => setCount({ type: "aaa" })}>十</button>
-      <button onClick={() => setCount({ type: "bbb" })}>一</button>
+      <br />
+      <button onClick={() => setCount({ type: "add" })}>+</button>
+      <button onClick={() => setCount({ type: "minus" })}>-</button>
     </div>
   );
 };
