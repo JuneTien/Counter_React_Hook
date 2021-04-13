@@ -1,3 +1,4 @@
+import "./styles.css";
 import { useState, useEffect, useReducer } from "react";
 
 export default function App() {
@@ -26,6 +27,7 @@ const Count = () => {
 
 // hook with customize hook
 const CountWithIntervel = () => {
+  // useCounter is customized hook
   const { count, handleSetCount } = useCounter();
   return (
     <div>
