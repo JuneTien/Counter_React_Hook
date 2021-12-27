@@ -45,6 +45,7 @@ const ChildEl = React.memo(Child, (preProps, nextProps) => {
   }
 });
 
+// useCallback
 const IncreaseCounter = () => {
   const [counter, setCounter] = useState(0);
   useEffect(() => {
@@ -58,14 +59,14 @@ const IncreaseCounter = () => {
 };
 
 const ButtonCounter = () => {
-  const [count, setCount] = useState();
+  const [count, setCount] = useState(0);
   const handleClick = useCallback(() => {
     setCount(count + 1);
-  }, []);
+  }, [count]);
 
-  console.log(">>> count", count);
+  console.log(">>>[ButtonCounter] count", count);
 
-  return <button onClick={() => handleClick}>xx{count}</button>;
+  return <button onClick={handleClick}>count: {count}</button>;
 };
 
 // hook
