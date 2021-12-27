@@ -1,7 +1,10 @@
 import "./styles.css";
-import { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useCallback } from "react";
 
 export default function App() {
+  const [name, setName] = useState("");
+  const [num, setNum] = useState(0);
+
   return (
     <div className="App">
       <Count />
@@ -9,9 +12,61 @@ export default function App() {
       <CountWithIntervel />
       <br />
       <CountHookReducer />
+      <br />
+      <ButtonCounter />
+      <br />
+      <IncreaseCounter />
+      <br />
+      Name:
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <br />
+      Friend Num:
+      <input value={num} onChange={(e) => setNum(e.target.value)} />
+      <ChildEl name={name} friendCount={num} />
     </div>
   );
 }
+
+const Child = ({ name, friendCount }) => {
+  console.log(">>render");
+  return (
+    <div>
+      <div>{name}</div>
+      <div>{friendCount}</div>
+    </div>
+  );
+};
+
+const ChildEl = React.memo(Child, (preProps, nextProps) => {
+  if (preProps.name !== nextProps.name) {
+    return false;
+  } else {
+    return true;
+  }
+});
+
+const IncreaseCounter = () => {
+  const [counter, setCounter] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCounter((counter) => counter + 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+  return <div>{counter}</div>;
+};
+
+const ButtonCounter = () => {
+  const [count, setCount] = useState();
+  const handleClick = useCallback(() => {
+    setCount(count + 1);
+  }, []);
+
+  console.log(">>> count", count);
+
+  return <button onClick={() => handleClick}>xx{count}</button>;
+};
 
 // hook
 const Count = () => {
