@@ -27,6 +27,7 @@ export default function App() {
   );
 }
 
+// useMemo
 const Child = ({ name, friendCount }) => {
   console.log(">>render");
   return (
@@ -45,7 +46,6 @@ const ChildEl = React.memo(Child, (preProps, nextProps) => {
   }
 });
 
-// useCallback
 const IncreaseCounter = () => {
   const [counter, setCounter] = useState(0);
   useEffect(() => {
@@ -58,6 +58,7 @@ const IncreaseCounter = () => {
   return <div>{counter}</div>;
 };
 
+// useCallback
 const ButtonCounter = () => {
   const [count, setCount] = useState(0);
   const handleClick = useCallback(() => {
